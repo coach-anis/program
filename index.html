@@ -367,6 +367,54 @@ body::after {
 .ex-notes:focus { outline:none; color:var(--text); }
 .ex-notes::placeholder { color:var(--dim2); }
 
+/* IMAGE UPLOAD */
+.ex-img-row {
+  padding:8px 12px;
+  border-top:1px solid rgba(255,255,255,.04);
+}
+
+.ex-img-btn {
+  width:100%;
+  background:transparent;
+  border:1px dashed rgba(201,168,76,.2);
+  border-radius:7px;
+  padding:8px;
+  color:var(--gold); opacity:.55;
+  font-family:'Cairo', sans-serif;
+  font-size:11px; font-weight:700;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+
+.ex-img-btn:hover { opacity:.9; background:rgba(201,168,76,.05); border-style:solid; }
+
+.ex-img-preview-wrap {
+  position:relative; display:inline-block; width:100%;
+}
+
+.ex-img-preview {
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  border-radius:7px;
+  border:1px solid rgba(201,168,76,.2);
+  display:block;
+  background:rgba(0,0,0,.2);
+}
+
+.ex-img-remove {
+  position:absolute; top:6px; left:6px;
+  width:24px; height:24px; border-radius:50%;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff; font-size:10px;
+  cursor:pointer; display:flex;
+  align-items:center; justify-content:center;
+  transition:all .2s;
+}
+
+.ex-img-remove:hover { background:var(--red); border-color:var(--red); }
+
 /* ADD EXERCISE BTN */
 .btn-add-ex {
   width:100%;
@@ -554,6 +602,55 @@ body::after {
   background:rgba(0,0,0,.15);
 }
 
+/* ─── PDF COVER PAGE ─── */
+.pdf-cover {
+  text-align:center;
+  padding:40px 24px 32px;
+  margin-bottom:24px;
+  background: linear-gradient(160deg, #161616 0%, #0F0F0F 100%);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:14px;
+  position:relative;
+  overflow:hidden;
+}
+.pdf-cover::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.pdf-cover-title {
+  font-family:'Bebas Neue', sans-serif;
+  font-size:38px; letter-spacing:3px;
+  color:var(--text); line-height:1.1; margin-bottom:10px;
+}
+.pdf-cover-client {
+  font-size:14px; color:var(--gold); margin-bottom:20px;
+  font-weight:700; letter-spacing:1px;
+}
+.pdf-cover-meta {
+  display:flex; justify-content:center; gap:12px; flex-wrap:wrap;
+  margin-bottom:24px;
+}
+.pdf-cover-meta-item {
+  background:rgba(201,168,76,.07);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:8px; padding:10px 16px;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  min-width:80px;
+}
+.pdf-cover-meta-lbl {
+  font-size:9px; letter-spacing:2px; color:var(--dim);
+  font-family:'Bebas Neue', sans-serif;
+}
+.pdf-cover-meta-val {
+  font-size:12px; font-weight:700; color:var(--gold);
+}
+.pdf-cover-line {
+  width:60px; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin:0 auto;
+}
+
 .print-btn {
   width:100%; margin-top:16px;
   background:linear-gradient(135deg, var(--gold), var(--gold2));
@@ -564,6 +661,38 @@ body::after {
 }
 
 .print-btn:hover { box-shadow:0 6px 20px rgba(201,168,76,.4); transform:translateY(-2px); }
+
+/* LOGO UPLOAD */
+.logo-upload-wrap { position:relative; }
+
+.logo-placeholder {
+  width:100%; height:60px;
+  border:1px dashed rgba(201,168,76,.25);
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); opacity:.5; font-size:12px; font-weight:700;
+  cursor:pointer; transition:all .2s;
+  font-family:'Cairo', sans-serif;
+}
+.logo-placeholder:hover { opacity:.9; background:rgba(201,168,76,.04); border-style:solid; }
+
+.logo-preview-wrap {
+  position:relative; display:inline-block; width:100%;
+}
+.logo-preview-wrap img {
+  width:100%; max-height:80px;
+  object-fit:contain; border-radius:8px;
+  border:1px solid rgba(201,168,76,.2);
+  display:block; background:rgba(0,0,0,.2);
+}
+.logo-remove-btn {
+  position:absolute; top:5px; left:5px;
+  width:22px; height:22px; border-radius:50%;
+  background:rgba(0,0,0,.7); border:1px solid rgba(255,255,255,.15);
+  color:#fff; font-size:9px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all .2s;
+}
+.logo-remove-btn:hover { background:var(--red); }
 
 /* stats strip */
 .stats-strip {
@@ -817,6 +946,20 @@ body::after {
           <textarea id="progNotes" placeholder="تعليمات عامة للعميل..."></textarea>
         </div>
 
+        <div class="field">
+          <label>لوغو الكوتش <span class="en">LOGO</span></label>
+          <div class="logo-upload-wrap" id="logoUploadWrap">
+            <input type="file" accept="image/*" id="logoFile" style="display:none" onchange="handleLogo(this)">
+            <div class="logo-placeholder" id="logoPlaceholder" onclick="document.getElementById('logoFile').click()">
+              <span>＋ رفع اللوغو</span>
+            </div>
+            <div class="logo-preview-wrap" id="logoPreviewWrap" style="display:none">
+              <img id="logoPreviewImg" src="" alt="logo">
+              <button class="logo-remove-btn" onclick="removeLogo()">✕</button>
+            </div>
+          </div>
+        </div>
+
         <!-- STATS -->
         <div class="stats-strip" id="statsStrip">
           <div class="stat-s"><div class="stat-sv" id="statDays">0</div><div class="stat-sl">DAYS</div></div>
@@ -827,6 +970,13 @@ body::after {
         <div class="actions-bar">
           <button class="btn-primary" onclick="openPreview()">👁 معاينة وطباعة</button>
           <button class="btn-secondary" onclick="clearAll()">🗑</button>
+        </div>
+        <div class="actions-bar" style="margin-top:8px">
+          <button class="btn-secondary" style="flex:1;font-size:12px" onclick="exportJSON()">⬇ تصدير JSON</button>
+          <label class="btn-secondary" style="flex:1;font-size:12px;text-align:center;cursor:pointer">
+            ⬆ استيراد JSON
+            <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
+          </label>
         </div>
 
       </div>
@@ -862,6 +1012,10 @@ body::after {
 <script>
 let days = [];
 let dayCounter = 0;
+
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
 const muscleOptions = ['صدر','ظهر','كتف','بايسبس','ترايسبس','رجل أمام','رجل خلف','بطن','ساق','كامل الجسم'];
 const dayTypes = ['تضخيم','تنشيف','قوة','تحمل','راحة نشطة'];
@@ -969,7 +1123,7 @@ function addExercise(dayId) {
   const exId = 'ex_' + Date.now();
   const day = days.find(d => d.id === dayId);
   if(!day) return;
-  day.exercises.push({ id:exId, name:'', muscle:'', sets:'3', reps:'10', rest:'90ث', rpe:'', notes:'' });
+  day.exercises.push({ id:exId, name:'', muscle:'', sets:'3', reps:'10', rest:'90ث', rpe:'', notes:'', image:'' });
   renderExercise(dayId, exId);
   updateStats();
 }
@@ -995,18 +1149,22 @@ function renderExercise(dayId, exId) {
   const dlId = 'dl_'+exId;
   const muscleOpts = muscleOptions.map(m => `<option value="${m}">`).join('');
 
+  const imgHtml = ex.image
+    ? '<div class="ex-img-preview-wrap"><img class="ex-img-preview" src="' + ex.image + '" alt="صورة التمرين"><button class="ex-img-remove" onclick="removeExImage(\'' + dayId + '\',\'' + exId + '\')">✕</button></div>'
+    : '<button class="ex-img-btn" onclick="document.getElementById(\'imgfile_' + exId + '\').click()">📷 إضافة صورة للتمرين</button>';
+
   row.innerHTML = `
     <datalist id="${dlId}">${muscleOpts}</datalist>
     <div class="ex-head">
       <span class="ex-drag">⠿</span>
       <span class="ex-num">${exNum}</span>
-      <input class="ex-name" placeholder="اسم التمرين..." value="${ex.name}"
+      <input class="ex-name" placeholder="اسم التمرين..." value="${esc(ex.name)}"
         oninput="updateEx('${dayId}','${exId}','name',this.value)"
         list="exnames_${exId}">
       <datalist id="exnames_${exId}">
         ${Object.values(exLibrary).flat().map(n=>`<option value="${n}">`).join('')}
       </datalist>
-      <input class="ex-muscle" list="${dlId}" placeholder="عضلة" value="${ex.muscle}"
+      <input class="ex-muscle" list="${dlId}" placeholder="عضلة" value="${esc(ex.muscle)}"
         oninput="updateEx('${dayId}','${exId}','muscle',this.value)">
       <button class="icon-btn danger" onclick="removeExercise('${dayId}','${exId}')">✕</button>
     </div>
@@ -1030,6 +1188,11 @@ function renderExercise(dayId, exId) {
     </div>
     <textarea class="ex-notes" rows="1" placeholder="ملاحظات: مثال: ركز على الفاصل، تحكم في النزول..."
       oninput="updateEx('${dayId}','${exId}','notes',this.value)">${ex.notes}</textarea>
+    <div class="ex-img-row">
+      <input type="file" accept="image/*" id="imgfile_${exId}" style="display:none"
+        onchange="handleExImage('${dayId}','${exId}',this)">
+      ${imgHtml}
+    </div>
   `;
 
   list.appendChild(row);
@@ -1041,6 +1204,50 @@ function updateEx(dayId, exId, field, val) {
   const ex = day.exercises.find(e => e.id === exId);
   if(ex) { ex[field] = val; }
   if(field === 'sets') updateStats();
+}
+
+function handleExImage(dayId, exId, input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const day = days.find(d => d.id === dayId);
+    if(!day) return;
+    const ex = day.exercises.find(e => e.id === exId);
+    if(ex) {
+      ex.image = e.target.result;
+      // Update UI without full re-render
+      const row = document.getElementById('ex_'+exId);
+      const imgRow = row.querySelector('.ex-img-row');
+      imgRow.innerHTML = `
+        <input type="file" accept="image/*" id="imgfile_${exId}" style="display:none"
+          onchange="handleExImage('${dayId}','${exId}',this)">
+        <div class="ex-img-preview-wrap">
+          <img class="ex-img-preview" src="${e.target.result}" alt="صورة التمرين">
+          <button class="ex-img-remove" onclick="removeExImage('${dayId}','${exId}')">✕</button>
+        </div>
+      `;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeExImage(dayId, exId) {
+  const day = days.find(d => d.id === dayId);
+  if(!day) return;
+  const ex = day.exercises.find(e => e.id === exId);
+  if(ex) {
+    ex.image = '';
+    const row = document.getElementById('ex_'+exId);
+    const imgRow = row.querySelector('.ex-img-row');
+    imgRow.innerHTML = `
+      <input type="file" accept="image/*" id="imgfile_${exId}" style="display:none"
+        onchange="handleExImage('${dayId}','${exId}',this)">
+      <button class="ex-img-btn" onclick="document.getElementById('imgfile_${exId}').click()">
+        📷 إضافة صورة للتمرين
+      </button>
+    `;
+  }
 }
 
 function removeExercise(dayId, exId) {
@@ -1071,6 +1278,90 @@ function clearAll() {
 }
 
 // ─── PREVIEW ───
+let logoData = '';
+
+function handleLogo(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    logoData = e.target.result;
+    document.getElementById('logoPlaceholder').style.display = 'none';
+    document.getElementById('logoPreviewWrap').style.display = 'block';
+    document.getElementById('logoPreviewImg').src = logoData;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeLogo() {
+  logoData = '';
+  document.getElementById('logoPlaceholder').style.display = 'flex';
+  document.getElementById('logoPreviewWrap').style.display = 'none';
+  document.getElementById('logoFile').value = '';
+}
+
+function exportJSON() {
+  const data = {
+    meta: {
+      name: document.getElementById('progName').value,
+      client: document.getElementById('clientName').value,
+      goal: document.getElementById('progGoal').value,
+      level: document.getElementById('progLevel').value,
+      duration: document.getElementById('progDuration').value,
+      notes: document.getElementById('progNotes').value,
+      logo: logoData
+    },
+    days: days
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const fname = (data.meta.client || data.meta.name || 'program').replace(/\s+/g,'_');
+  a.download = fname + '_program.json';
+  a.click();
+}
+
+function importJSON(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      // restore meta
+      if(data.meta) {
+        document.getElementById('progName').value = data.meta.name || '';
+        document.getElementById('clientName').value = data.meta.client || '';
+        document.getElementById('progNotes').value = data.meta.notes || '';
+        ['progGoal','progLevel','progDuration'].forEach(id => {
+          const el = document.getElementById(id);
+          const key = id === 'progGoal' ? 'goal' : id === 'progLevel' ? 'level' : 'duration';
+          if(data.meta[key]) {
+            for(let o of el.options) { if(o.value === data.meta[key]) { o.selected = true; break; } }
+          }
+        });
+        if(data.meta.logo) {
+          logoData = data.meta.logo;
+          document.getElementById('logoPlaceholder').style.display = 'none';
+          document.getElementById('logoPreviewWrap').style.display = 'block';
+          document.getElementById('logoPreviewImg').src = logoData;
+        }
+      }
+      // restore days
+      days = data.days || [];
+      dayCounter = days.length ? Math.max(...days.map(d => d.num)) : 0;
+      document.getElementById('editor').innerHTML = '';
+      days.forEach(d => renderDay(d.id));
+      updateStats();
+      alert('✅ تم استيراد البرنامج بنجاح!');
+    } catch(err) {
+      alert('❌ ملف غير صالح');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
 function openPreview() {
   const name = document.getElementById('progName').value || 'البرنامج التدريبي';
   const client = document.getElementById('clientName').value;
@@ -1079,6 +1370,26 @@ function openPreview() {
   const duration = document.getElementById('progDuration').value;
   const notes = document.getElementById('progNotes').value;
 
+  // ─── Cover page ───
+  const logoHtml = logoData
+    ? `<img src="${logoData}" style="max-width:140px;max-height:100px;object-fit:contain;margin-bottom:24px;display:block;margin-left:auto;margin-right:auto;">`
+    : `<div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:4px;color:#C9A84C;margin-bottom:20px;">COACH ANIS</div>`;
+
+  const coverHtml = `
+    <div class="pdf-cover">
+      ${logoHtml}
+      <div class="pdf-cover-title">${name}</div>
+      ${client ? `<div class="pdf-cover-client">مُعَدّ لـ: ${client}</div>` : ''}
+      <div class="pdf-cover-meta">
+        <div class="pdf-cover-meta-item"><span class="pdf-cover-meta-lbl">الهدف</span><span class="pdf-cover-meta-val">${goal}</span></div>
+        <div class="pdf-cover-meta-item"><span class="pdf-cover-meta-lbl">المستوى</span><span class="pdf-cover-meta-val">${level}</span></div>
+        <div class="pdf-cover-meta-item"><span class="pdf-cover-meta-lbl">المدة</span><span class="pdf-cover-meta-val">${duration}</span></div>
+        <div class="pdf-cover-meta-item"><span class="pdf-cover-meta-lbl">الأيام</span><span class="pdf-cover-meta-val">${days.filter(d=>d.exercises.length>0).length} أيام</span></div>
+      </div>
+      <div class="pdf-cover-line"></div>
+    </div>`;
+
+  // Update modal header too
   document.getElementById('pvName').innerHTML = name.split(' ').map((w,i) => i===0?`${w} `:`<span>${w}</span>`).join(' ');
   document.getElementById('pvClient').textContent = client ? `العميل: ${client}` : '';
   document.getElementById('pvMeta').innerHTML = `
@@ -1088,7 +1399,7 @@ function openPreview() {
     <span>🏋️ ${days.length} أيام</span>
   `;
 
-  let html = '';
+  let html = coverHtml;
   if(notes) html += `<div style="background:var(--dark3);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--dim);border-right:3px solid var(--gold)"><strong style="color:var(--gold)">📋 ملاحظات عامة:</strong> ${notes}</div>`;
 
   days.forEach(day => {
@@ -1115,7 +1426,10 @@ function openPreview() {
           ${day.exercises.map((ex, i) => `
             <tr>
               <td>${i+1}</td>
-              <td style="font-weight:700">${ex.name || '—'}</td>
+              <td style="font-weight:700">
+                ${ex.name || '—'}
+                ${ex.image ? `<div style="margin-top:6px"><img src="${ex.image}" style="width:100%;max-width:220px;height:auto;object-fit:contain;border-radius:6px;border:1px solid rgba(201,168,76,.2);display:block;background:rgba(0,0,0,.2);"></div>` : ''}
+              </td>
               <td style="font-size:11px;color:var(--gold);opacity:.7">${ex.muscle || '—'}</td>
               <td><span class="sets-val">${ex.sets || '—'}</span></td>
               <td><span class="reps-val">${ex.reps || '—'}</span></td>
@@ -1159,11 +1473,13 @@ addDay();
   .overlay { position:static !important; display:block !important; background:#080808 !important; padding:0 !important; }
   .preview-modal { border:none !important; border-radius:0 !important; max-width:100% !important; background:#0F0F0F !important; color:#EFEFEF !important; box-shadow:none !important; }
   .modal-close-btn, .print-btn { display:none !important; }
+  .preview-head { display:none !important; }
+  .pdf-cover { page-break-after:always; background:#161616 !important; border-color:rgba(201,168,76,.2) !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  .pdf-cover-meta-item { background:rgba(201,168,76,.07) !important; border-color:rgba(201,168,76,.2) !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
   .preview-day-head { background:#161616 !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
   .preview-ex-table th { background:rgba(0,0,0,0.4) !important; color:#666 !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
   .preview-ex-table td { border-bottom:1px solid rgba(255,255,255,.05) !important; }
   .preview-day { border:1px solid rgba(255,255,255,.08) !important; page-break-inside:avoid; }
-  .preview-head { background:#0F0F0F !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
   .preview-body { background:#0F0F0F !important; }
   * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; color-adjust:exact !important; }
 }
