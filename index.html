@@ -432,6 +432,44 @@ body::after {
 
 .ex-img-remove:hover { background:var(--red); border-color:var(--red); }
 
+/* VIDEO UPLOAD */
+.ex-vid-btn {
+  width:100%;
+  background:transparent;
+  border:1px dashed rgba(122,184,232,.25);
+  border-radius:7px;
+  padding:8px;
+  color:var(--blue); opacity:.65;
+  font-family:'Cairo', sans-serif;
+  font-size:11px; font-weight:700;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+.ex-vid-btn:hover { opacity:1; background:rgba(122,184,232,.06); border-style:solid; }
+
+.ex-vid-preview-wrap {
+  position:relative; width:100%;
+  border-radius:7px; overflow:hidden;
+  border:1px solid rgba(122,184,232,.2);
+  background:#000;
+  margin-top:4px;
+}
+.ex-vid-preview {
+  width:100%; max-height:200px;
+  display:block;
+}
+.ex-vid-remove {
+  position:absolute; top:6px; left:6px;
+  width:24px; height:24px; border-radius:50%;
+  background:rgba(0,0,0,.75);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff; font-size:10px;
+  cursor:pointer; display:flex;
+  align-items:center; justify-content:center;
+  transition:all .2s;
+}
+.ex-vid-remove:hover { background:var(--red); border-color:var(--red); }
+
 /* ADD EXERCISE BTN */
 .btn-add-ex {
   width:100%;
@@ -1140,7 +1178,7 @@ function addExercise(dayId) {
   const exId = 'ex_' + Date.now();
   const day = days.find(d => d.id === dayId);
   if(!day) return;
-  day.exercises.push({ id:exId, name:'', muscle:'', sets:'3', reps:'10', rest:'90ث', rpe:'', notes:'', image:'' });
+  day.exercises.push({ id:exId, name:'', muscle:'', sets:'3', reps:'10', rest:'90ث', rpe:'', notes:'', image:'', video:'' });
   renderExercise(dayId, exId);
   updateStats();
 }
@@ -1169,6 +1207,10 @@ function renderExercise(dayId, exId) {
   const imgHtml = ex.image
     ? '<div class="ex-img-preview-wrap"><img class="ex-img-preview" src="' + ex.image + '" alt="صورة التمرين"><button class="ex-img-remove" onclick="removeExImage(\'' + dayId + '\',\'' + exId + '\')">✕</button></div>'
     : '<button class="ex-img-btn" onclick="document.getElementById(\'imgfile_' + exId + '\').click()">📷 إضافة صورة للتمرين</button>';
+
+  const vidHtml = ex.video
+    ? '<div class="ex-vid-preview-wrap"><video class="ex-vid-preview" src="' + ex.video + '" controls></video><button class="ex-vid-remove" onclick="removeExVideo(\'' + dayId + '\',\'' + exId + '\')">✕</button></div>'
+    : '<button class="ex-vid-btn" onclick="document.getElementById(\'vidfile_' + exId + '\').click()">🎬 إضافة فيديو للتمرين</button>';
 
   row.innerHTML = `
     <datalist id="${dlId}">${muscleOpts}</datalist>
@@ -1209,6 +1251,11 @@ function renderExercise(dayId, exId) {
       <input type="file" accept="image/*" id="imgfile_${exId}" style="display:none"
         onchange="handleExImage('${dayId}','${exId}',this)">
       ${imgHtml}
+    </div>
+    <div class="ex-img-row">
+      <input type="file" accept="video/*" id="vidfile_${exId}" style="display:none"
+        onchange="handleExVideo('${dayId}','${exId}',this)">
+      ${vidHtml}
     </div>
   `;
 
@@ -1262,6 +1309,48 @@ function removeExImage(dayId, exId) {
         onchange="handleExImage('${dayId}','${exId}',this)">
       <button class="ex-img-btn" onclick="document.getElementById('imgfile_${exId}').click()">
         📷 إضافة صورة للتمرين
+      </button>
+    `;
+  }
+}
+
+function handleExVideo(dayId, exId, input) {
+  const file = input.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  const day = days.find(d => d.id === dayId);
+  if(!day) return;
+  const ex = day.exercises.find(e => e.id === exId);
+  if(ex) {
+    ex.video = url;
+    const row = document.getElementById('ex_'+exId);
+    const vidRows = row.querySelectorAll('.ex-img-row');
+    const vidRow = vidRows[vidRows.length - 1];
+    vidRow.innerHTML = `
+      <input type="file" accept="video/*" id="vidfile_${exId}" style="display:none"
+        onchange="handleExVideo('${dayId}','${exId}',this)">
+      <div class="ex-vid-preview-wrap">
+        <video class="ex-vid-preview" src="${url}" controls></video>
+        <button class="ex-vid-remove" onclick="removeExVideo('${dayId}','${exId}')">✕</button>
+      </div>
+    `;
+  }
+}
+
+function removeExVideo(dayId, exId) {
+  const day = days.find(d => d.id === dayId);
+  if(!day) return;
+  const ex = day.exercises.find(e => e.id === exId);
+  if(ex) {
+    ex.video = '';
+    const row = document.getElementById('ex_'+exId);
+    const vidRows = row.querySelectorAll('.ex-img-row');
+    const vidRow = vidRows[vidRows.length - 1];
+    vidRow.innerHTML = `
+      <input type="file" accept="video/*" id="vidfile_${exId}" style="display:none"
+        onchange="handleExVideo('${dayId}','${exId}',this)">
+      <button class="ex-vid-btn" onclick="document.getElementById('vidfile_${exId}').click()">
+        🎬 إضافة فيديو للتمرين
       </button>
     `;
   }
@@ -1446,6 +1535,7 @@ function openPreview() {
               <td style="font-weight:700">
                 ${ex.name || '—'}
                 ${ex.image ? `<div style="margin-top:6px"><img src="${ex.image}" style="width:100%;max-width:220px;height:auto;object-fit:contain;border-radius:6px;border:1px solid rgba(201,168,76,.2);display:block;background:rgba(0,0,0,.2);"></div>` : ''}
+                ${ex.video ? `<div style="margin-top:6px"><video src="${ex.video}" controls style="width:100%;max-width:220px;border-radius:6px;border:1px solid rgba(122,184,232,.2);display:block;background:#000;"></video></div>` : ''}
               </td>
               <td style="font-size:11px;color:var(--gold);opacity:.7">${ex.muscle || '—'}</td>
               <td><span class="sets-val">${ex.sets || '—'}</span></td>
