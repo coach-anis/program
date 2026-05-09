@@ -175,9 +175,51 @@ nav{background:var(--primary);padding:0 24px;height:58px;display:flex;align-item
 .pv-notes{font-size:11px;color:var(--muted);padding:5px 12px 9px;background:#fffdf5;font-style:italic;border-top:1px dashed #ece9df;}
 .pv-footer{text-align:center;padding:12px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);letter-spacing:3px;font-family:'Bebas Neue',sans-serif;}
 
-@media print{
-  nav,#gate,.sidebar,.editor,.btn-add-day,#overlay{display:none!important;}
-  .modal-close,.modal-print{display:none!important;}
+@media print {
+  @page { margin: 10mm 12mm; size: A4; }
+
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+
+  html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+
+  nav, #gate, .sidebar, .editor, .btn-add-day, .modal-close, .modal-print { display: none !important; }
+
+  #overlay {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important; left: 0 !important; right: 0 !important;
+    background: transparent !important;
+    padding: 0 !important; margin: 0 !important;
+    overflow: visible !important;
+    width: 100% !important; height: auto !important;
+    backdrop-filter: none !important;
+  }
+
+  .modal {
+    border-radius: 0 !important;
+    max-width: 100% !important; width: 100% !important;
+    box-shadow: none !important;
+    margin: 0 !important; padding: 0 !important;
+    position: static !important;
+    overflow: visible !important;
+    max-height: none !important; height: auto !important;
+  }
+
+  .pv-cover {
+    background: var(--primary) !important;
+    -webkit-print-color-adjust: exact !important;
+    page-break-after: always;
+  }
+
+  .pv-body { padding: 0 !important; overflow: visible !important; max-height: none !important; height: auto !important; }
+
+  .pv-day { page-break-inside: avoid; border: 1.5px solid var(--border) !important; }
+  .pv-day-head { background: var(--primary) !important; -webkit-print-color-adjust: exact !important; }
+  .pv-muscle-title { background: #f0eef8 !important; -webkit-print-color-adjust: exact !important; }
+  .pv-table th { background: #fafafa !important; -webkit-print-color-adjust: exact !important; }
+  .pv-table tbody tr:nth-child(even) td { background: #fdfcfa !important; -webkit-print-color-adjust: exact !important; }
+  .pv-notes { background: #fffdf5 !important; -webkit-print-color-adjust: exact !important; }
+  .pv-tag { background: rgba(255,255,255,.1) !important; -webkit-print-color-adjust: exact !important; }
 }
 </style>
 </head>
