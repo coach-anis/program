@@ -81,13 +81,6 @@ nav{background:var(--primary);padding:0 24px;height:58px;display:flex;align-item
 .day-del{background:rgba(255,255,255,.1);border:none;border-radius:6px;width:30px;height:30px;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .day-del:hover{background:rgba(231,76,60,.4);color:#fff;}
 
-/* TYPE PILLS */
-.type-pills{padding:9px 14px;background:#fafafa;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
-.type-lbl{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1px;}
-.pill{padding:4px 11px;border-radius:100px;font-size:11px;font-weight:700;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .2s;}
-.pill:hover{border-color:var(--accent);color:var(--accent);}
-.pill.on{border-color:var(--primary);background:var(--primary);color:#fff;}
-
 /* MUSCLE SECTIONS */
 .muscle-sections{padding:14px 16px 16px;}
 .btn-add-muscle{width:100%;border:2px dashed #c4b8f0;border-radius:10px;background:none;padding:11px;color:var(--purple);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:10px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
@@ -175,8 +168,153 @@ nav{background:var(--primary);padding:0 24px;height:58px;display:flex;align-item
 .pv-notes{font-size:11px;color:var(--muted);padding:5px 12px 9px;background:#fffdf5;font-style:italic;border-top:1px dashed #ece9df;}
 .pv-footer{text-align:center;padding:12px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);letter-spacing:3px;font-family:'Bebas Neue',sans-serif;}
 
+/* ══════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════ */
+@media(max-width:720px){
+
+  /* NAV */
+  nav{padding:0 14px;height:52px;}
+  .nav-brand{font-size:17px;letter-spacing:3px;}
+  .nav-btn{padding:6px 10px;font-size:11px;}
+  .nav-actions{gap:5px;}
+
+  /* LAYOUT - sidebar goes on top */
+  .layout{display:flex;flex-direction:column;}
+
+  /* SIDEBAR - no longer sticky, full width */
+  .sidebar{
+    position:static;
+    height:auto;
+    overflow-y:visible;
+    border-left:none;
+    border-bottom:1px solid var(--border);
+    padding:16px 14px;
+  }
+
+  /* STATS */
+  .stats-row{gap:8px;}
+  .stat-val{font-size:22px;}
+
+  /* EDITOR */
+  .editor{padding:14px 12px;}
+  .editor-title{font-size:13px;margin-bottom:14px;}
+
+  /* DAY CARD */
+  .day-head{padding:11px 12px;gap:8px;}
+  .day-num{font-size:20px;}
+  .day-name-inp{font-size:12px;padding:6px 9px;}
+  .day-del{width:28px;height:28px;font-size:13px;}
+
+  /* MUSCLE SECTIONS */
+  .muscle-sections{padding:10px 12px 14px;}
+
+  /* EX TABLE - stack on mobile */
+  .ex-thead{display:none;}
+  .ex-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:10px 12px;
+    align-items:center;
+    position:relative;
+  }
+  .ex-num{
+    font-size:14px;
+    min-width:22px;
+  }
+  .ex-inp{
+    flex:1;
+    min-width:120px;
+    font-size:13px;
+    border-bottom:1px dashed var(--border);
+    padding-bottom:3px;
+  }
+  .ex-mini{
+    width:58px;
+    font-size:12px;
+    padding:4px 3px;
+  }
+  .ex-del{
+    margin-right:auto;
+  }
+
+  /* ADD EX BUTTON */
+  .btn-add-ex{font-size:12px;padding:10px;}
+
+  /* ADD DAY */
+  .btn-add-day{padding:16px;font-size:13px;border-radius:12px;}
+
+  /* MUSCLE BLOCK */
+  .muscle-block-head{padding:8px 12px;}
+  .muscle-select{font-size:13px;}
+
+  /* GATE */
+  .gate-box{padding:32px 22px;margin:0 12px;border-radius:18px;}
+  .gate-icon{font-size:38px;}
+  .gate-title{font-size:18px;}
+  .gate-inp{font-size:18px;padding:11px 16px;}
+
+  /* PREVIEW MODAL */
+  #overlay{padding:0;}
+  .modal{
+    border-radius:0;
+    max-width:100%;
+    width:100%;
+    margin:0;
+    min-height:100vh;
+  }
+  .modal-close{top:10px;left:10px;}
+  .modal-print{top:10px;right:10px;padding:6px 12px;font-size:11px;}
+
+  /* PREVIEW COVER */
+  .pv-cover{padding:60px 20px 24px;}
+  .pv-title{font-size:28px;letter-spacing:2px;}
+  .pv-tags{gap:5px;}
+  .pv-tag{padding:4px 10px;font-size:11px;}
+
+  /* PREVIEW BODY */
+  .pv-body{padding:14px 12px;}
+  .pv-day{margin-bottom:14px;border-radius:10px;}
+  .pv-day-head{padding:10px 12px;gap:8px;}
+  .pv-day-num{font-size:18px;}
+  .pv-day-name{font-size:13px;}
+  .pv-day-type{font-size:9px;}
+
+  /* PREVIEW TABLE - scroll horizontal */
+  .pv-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .pv-table th{padding:7px 8px;font-size:8px;white-space:nowrap;}
+  .pv-table td{padding:8px 8px;font-size:12px;white-space:nowrap;}
+  .pv-table td.sets{font-size:17px;}
+  .pv-table td.reps{font-size:17px;}
+  .pv-img{max-width:130px;}
+
+  /* FOOTER */
+  .pv-footer{font-size:9px;letter-spacing:2px;padding:10px;}
+}
+
+/* Extra small screens */
+@media(max-width:380px){
+  .nav-btn:not(.gold){display:none;}
+  .ex-mini{width:48px;font-size:11px;}
+  .pv-title{font-size:22px;}
+}
+
 @media print {
-  @page { margin: 10mm 12mm; size: A4; }
+  @page {
+    margin: 10mm 12mm;
+    size: A4;
+    /* إخفاء التاريخ والوقت والعنوان من المتصفح */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  @page :first { margin-top: 0; }
+
+  /* إخفاء header/footer المتصفح */
+  html {
+    margin: 0 !important;
+  }
 
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
 
@@ -211,7 +349,7 @@ nav{background:var(--primary);padding:0 24px;height:58px;display:flex;align-item
     page-break-after: always;
   }
 
-  .pv-body { padding: 0 !important; overflow: visible !important; max-height: none !important; height: auto !important; }
+  .pv-body { padding: 10mm 12mm !important; overflow: visible !important; max-height: none !important; height: auto !important; }
 
   .pv-day { page-break-inside: avoid; border: 1.5px solid var(--border) !important; }
   .pv-day-head { background: var(--primary) !important; -webkit-print-color-adjust: exact !important; }
@@ -295,7 +433,7 @@ nav{background:var(--primary);padding:0 24px;height:58px;display:flex;align-item
 <div id="overlay" onclick="closePreview(event)">
   <div class="modal">
     <button class="modal-close" onclick="closePreview({target:document.getElementById('overlay')})">✕</button>
-    <button class="modal-print" onclick="window.print()">🖨 طباعة / PDF</button>
+    <button class="modal-print" onclick="printClean()">🖨 طباعة / PDF</button>
     <div id="pvContent"></div>
   </div>
 </div>
@@ -304,8 +442,31 @@ nav{background:var(--primary);padding:0 24px;height:58px;display:flex;align-item
 <script>
 let days=[], dayCounter=0, logoData=null;
 
+function printClean(){
+  // فتح نافذة طباعة بدون header/footer
+  const content = document.getElementById('pvContent').innerHTML;
+  const styles = Array.from(document.querySelectorAll('style')).map(s=>s.innerHTML).join('');
+  const win = window.open('','_blank','width=900,height=700');
+  win.document.write(`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+${styles}
+@page { margin: 10mm 12mm; size: A4; }
+* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+body { margin: 0; padding: 0; background: #fff; font-family: 'Cairo', sans-serif; }
+</style>
+</head>
+<body>
+${content}
+<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();};};<\/script>
+</body></html>`);
+  win.document.close();
+}
+
 const MUSCLES=['صدر','ظهر','أكتاف','بايسبس','ترايسبس','أرجل','كوادز','هامسترينج','غلوتس','كور','ساق','Chest','Back','Shoulders','Biceps','Triceps','Legs','Quads','Hamstrings','Glutes','Core','Calves'];
-const DAY_TYPES=['Push','Pull','Legs','Upper','Lower','Full Body','Chest','Back','Shoulders','Arms','Cardio','Rest'];
 
 function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function getDayById(id){return days.find(d=>d.id===id);}
@@ -381,7 +542,7 @@ function renderDay(id){
   const editor=document.getElementById('editor');
   let el=document.getElementById('dc_'+id);
   if(!el){el=document.createElement('div');el.id='dc_'+id;editor.appendChild(el);}
-  const activePill=t=>day.type===t?'on':'';
+
   el.innerHTML=`
   <div class="day-card">
     <div class="day-head">
@@ -390,10 +551,7 @@ function renderDay(id){
         value="${escH(day.name)}" oninput="getDayById('${id}').name=this.value">
       <button class="day-del" onclick="deleteDay('${id}')">🗑</button>
     </div>
-    <div class="type-pills">
-      <span class="type-lbl">النوع:</span>
-      ${DAY_TYPES.map(t=>`<span class="pill ${activePill(t)}" onclick="setType('${id}','${t}')">${t}</span>`).join('')}
-    </div>
+
     <div class="muscle-sections" id="ms_${id}">
       ${day.muscleBlocks.map(mb=>renderMB(id,mb)).join('')}
       <button class="btn-add-muscle" onclick="addMB('${id}')">💪 إضافة قسم عضلة</button>
@@ -437,11 +595,6 @@ function deleteMB(dayId,mbId){
   const day=getDayById(dayId);if(!day)return;
   day.muscleBlocks=day.muscleBlocks.filter(m=>m.id!==mbId);
   renderDay(dayId);updateStats();
-}
-function setType(dayId,type){
-  const day=getDayById(dayId);
-  day.type=day.type===type?'':type;
-  renderDay(dayId);
 }
 function deleteDay(id){
   if(!confirm('حذف هذا اليوم؟'))return;
